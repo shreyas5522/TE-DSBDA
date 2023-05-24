@@ -3,25 +3,34 @@
 Follow the steps below to install Hadoop on Ubuntu:
 
 1. Update the system packages:
+```
 sudo apt-get update
-
+```
 
 2. Install OpenJDK 18:
+```
 sudo apt install openjdk-18-jdk
-
+```
 
 3. Navigate to the JVM directory:
+```
 cd /usr/lib/jvm
+```
 
 4. List the files in the directory:
+```
 cd /usr/lib/jvm
+```
 
 5. Go back to the home directory:
+```
 cd
+```
 
 6. Open the `.bashrc` file for editing:
+```
 sudo nano .bashrc
-
+```
 
 7. Add the following lines at the end of the file:
 ```bash
