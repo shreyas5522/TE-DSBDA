@@ -1,4 +1,4 @@
-#Assignment A-2 MapReduce Commands:
+# Assignment A-2 MapReduce Commands:
 ```bash
 start-all.sh
 jps
