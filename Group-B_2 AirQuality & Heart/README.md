@@ -13,8 +13,7 @@ ds_heart = pd.read_csv("heart.csv")
 ds.head()
 ```
 ```
-d```
-```s.info()
+ds.info()
 ```
 ```
 #Data Cleaning
