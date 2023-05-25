@@ -1,88 +1,66 @@
-DSBDAL Practical No: 3 Hive SQL Queries:
+## Commands
+```
+import bs4
+import pandas as pd
+import requests
+```
+```
+request1= requests.get("https://books.toscrape.com/catalogue/page-2.html")
+```
+```
+print(request1)
+```
+```
+soup = bs4.BeautifulSoup(request1.text)
+```
+```
+print(soup)
+```
+```
+arti=soup.select('article h3 a' )
+print(len(arti))
+```
+```
+soup.select('article h3 a')
+```
+```
+soup.select('article p i')
+```
+```
+soup.select('article h3 a')[0]['title']
+```
+```
+title_list=[]
+```
+```
+rating_list=[]
+```
+```
+print(title_list)
+```
+```
+for num_pages in range(0,51):
+ reqnew= requests.get('https://books.toscrape.com/catalogue/page-2.html')
+ page_req_text= bs4.BeautifulSoup(reqnew.text)
 
--- If Hive is not open, change the metastore_db file name to metastore_db_bkp
--- Run the following commands to install the Derby database
-schematool -initSchema -dbType derby
+for item in page_req_text.select('article h3 a'):
+    title_list.append(item['title'])
 
--- Open terminal and start Hive
--- stop-all.sh
--- start-all.sh
--- hive
--- cd $HIVE_HOME
--- cd bin
--- hive
--- Browser - http://localhost:9870/
+for n in range(0,60,3):
+    rating_list.append(page_req_text.select( 'article p')[n]['class'][1])
+```
+```
+sl=dict(zip(title_list,rating_list))
+```
+```
+new=pd.DataFrame.from_dict(sl,orient='index')
+```
+```
+new.to_csv('index.csv')
+```
+```
+new
+```
 
--- Create Database flights_data
-CREATE DATABASE flight_data;
 
--- Create table flights
-CREATE TABLE flights1 (
-  flight_date DATE,
-  airline_code INT,
-  carrier_code STRING,
-  origin STRING,
-  dest STRING,
-  depart_time INT,
-  depart_delta INT,
-  depart_delay INT,
-  arrive_time INT,
-  arrive_delta INT,
-  arrive_delay INT,
-  is_cancelled BOOLEAN,
-  cancellation_code STRING,
-  distance INT,
-  carrier_delay INT,
-  weather_delay INT,
-  nas_delay INT,
-  security_delay INT,
-  late_aircraft_delay INT
-)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE;
-
--- Create table airlines
-CREATE TABLE airlines1 (
-  code INT,
-  description STRING
-)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE;
-
--- Create table carriers
-CREATE TABLE carriers1 (
-  code INT,
-  description STRING
-)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE;
-
--- Create table cancellation_reasons
-CREATE TABLE cancellation_reasons1 (
-  code INT,
-  description STRING
-)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE;
-
--- Load the dataset files
-LOAD DATA LOCAL INPATH '${env:HOME}/flight_data/ontime_flights.tsv' OVERWRITE INTO TABLE flights1;
-LOAD DATA LOCAL INPATH '${env:HOME}/flight_data/airlines.tsv' OVERWRITE INTO TABLE airlines1;
-LOAD DATA LOCAL INPATH '${env:HOME}/flight_data/carriers.tsv' OVERWRITE INTO TABLE carriers1;
-LOAD DATA LOCAL INPATH '${env:HOME}/flight_data/cancellation_reasons.tsv' OVERWRITE INTO TABLE cancellation_reasons1;
-
--- Perform join operations
-SELECT a.description, AVG(f.depart_delay)
-FROM airlines1 a
-JOIN flights1 f ON a.code = f.airline_code
-GROUP BY a.description;
-
-SELECT c.description, AVG(f.depart_delay)
-FROM carriers1 c
-JOIN flights1 f ON c.code = f.carrier_code
-GROUP BY c.description;
 
