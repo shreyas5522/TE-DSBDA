@@ -54,8 +54,8 @@ export PDSH_RCMD_TYPE=ssh
 
 sudo apt-get install ssh
 
-10. Extract the Hadoop archive:
-
+10. Download & Extract the Hadoop archive:
+Download from here : https://dlcdn.apache.org/hadoop/common/hadoop-3.3.5/hadoop-3.3.5.tar.gz
 ```javascript
 tar -zxvf ~/Downloads/hadoop-3.3.4.tar.gz
 ```
