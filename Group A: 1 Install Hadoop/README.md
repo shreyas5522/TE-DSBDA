@@ -114,8 +114,9 @@ sudo nano core-site.xml
 18. Save the changes by pressing Ctrl+O, then press Enter. Exit the editor bypressing Ctrl+X.
 
 19. Open the hdfs-site.xml file for editing:
+```
 sudo nano hdfs-site.xml
-
+```
 Add the following configuration at the end of the file:
 ```<configuration>
   <property>
