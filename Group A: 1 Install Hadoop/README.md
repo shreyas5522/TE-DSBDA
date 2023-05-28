@@ -128,7 +128,9 @@ Add the following configuration at the end of the file:
 21. Save the changes by pressing Ctrl+O, then press Enter. Exit the editor by pressing Ctrl+X.
 
 22. Open the mapred-site.xml file for editing:
+```
 sudo nano mapred-site.xml
+```
 
 23. Add the following configuration at the end of the file:
 ```
